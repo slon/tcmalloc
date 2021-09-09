@@ -1194,6 +1194,28 @@ extern "C" size_t MallocExtension_Internal_ReleaseCpuMemory(int cpu) {
   return bytes;
 }
 
+extern "C" void MallocExtension_AcquireInternalLocks() {
+  if (Static::CPUCacheActive()) {
+    Static::cpu_cache().AcquireInternalLocks();
+  }
+  Static::transfer_cache().AcquireInternalLocks();
+  tcmalloc::guarded_page_lock.Lock();
+  release_lock.Lock();
+  pageheap_lock.Lock();
+  tcmalloc::AcquireSystemAllocLock();
+}
+
+extern "C" void MallocExtension_ReleaseInternalLocks() {
+  tcmalloc::ReleaseSystemAllocLock();
+  pageheap_lock.Unlock();  
+  tcmalloc::guarded_page_lock.Unlock();
+  release_lock.Unlock();
+  Static::transfer_cache().ReleaseInternalLocks();
+  if (Static::CPUCacheActive()) {
+    Static::cpu_cache().ReleaseInternalLocks();
+  }
+}
+
 //-------------------------------------------------------------------
 // Helpers for the exported routines below
 //-------------------------------------------------------------------

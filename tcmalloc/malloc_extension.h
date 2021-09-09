@@ -444,6 +444,11 @@ class MallocExtension final {
   // Specifies the release rate from the page heap.  ProcessBackgroundActions
   // must be called for this to be operative.
   static void SetBackgroundReleaseRate(BytesPerSecond rate);
+
+  // Acquire and release all internal allocator locks.
+  // YT uses this API to safely call fork().
+  static void AcquireInternalLocks();
+  static void ReleaseInternalLocks();
 };
 
 }  // namespace tcmalloc

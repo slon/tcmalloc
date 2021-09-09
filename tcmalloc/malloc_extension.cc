@@ -415,6 +415,22 @@ void MallocExtension::SetBackgroundReleaseRate(BytesPerSecond rate) {
 #endif
 }
 
+void MallocExtension::AcquireInternalLocks() {
+#if ABSL_INTERNAL_HAVE_WEAK_MALLOCEXTENSION_STUBS
+  if (&MallocExtension_AcquireInternalLocks != nullptr) {
+    MallocExtension_AcquireInternalLocks();
+  }
+#endif
+}
+
+void MallocExtension::ReleaseInternalLocks() {
+#if ABSL_INTERNAL_HAVE_WEAK_MALLOCEXTENSION_STUBS
+  if (&MallocExtension_AcquireInternalLocks != nullptr) {
+    MallocExtension_ReleaseInternalLocks();
+  }
+#endif
+}
+
 }  // namespace tcmalloc
 
 // Default implementation just returns size. The expectation is that

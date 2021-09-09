@@ -109,6 +109,12 @@ ABSL_ATTRIBUTE_WEAK int64_t
 MallocExtension_Internal_GetMaxTotalThreadCacheBytes();
 ABSL_ATTRIBUTE_WEAK void MallocExtension_Internal_SetMaxTotalThreadCacheBytes(
     int64_t value);
+
+ABSL_ATTRIBUTE_WEAK void
+MallocExtension_AcquireInternalLocks();
+ABSL_ATTRIBUTE_WEAK void
+MallocExtension_ReleaseInternalLocks();
+
 }
 
 #endif

@@ -75,6 +75,18 @@ class TransferCacheManager {
     }
   }
 
+  void AcquireInternalLocks() {
+    for (int i = 0; i < kNumClasses; ++i) {
+      cache_[i].legacy.AcquireInternalLocks();
+    }
+  }
+
+  void ReleaseInternalLocks() {
+    for (int i = 0; i < kNumClasses; ++i) {
+      cache_[i].legacy.ReleaseInternalLocks();
+    }    
+  }
+
   void InsertRange(int size_class, absl::Span<void *> batch, int n) {
     if (use_lock_free_cache_)
       cache_[size_class].lock_free.InsertRange(batch, n);

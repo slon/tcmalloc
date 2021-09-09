@@ -378,6 +378,18 @@ class TransferCache {
     return freelist_do_not_access_directly_;
   }
 
+  void AcquireInternalLocks()
+  {
+    freelist().AcquireInternalLocks();
+    lock_.Lock();
+  }
+
+  void ReleaseInternalLocks()
+  {
+    lock_.Unlock();
+    freelist().ReleaseInternalLocks();
+  }
+
  private:
   // Returns first object of the i-th slot.
   void **GetSlot(size_t i) ABSL_EXCLUSIVE_LOCKS_REQUIRED(lock_) {

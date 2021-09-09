@@ -99,6 +99,9 @@ class CPUCache {
   void Print(TCMalloc_Printer* out) const;
   void PrintInPbtxt(PbtxtRegion* region) const;
 
+  void AcquireInternalLocks();
+  void ReleaseInternalLocks();
+
  private:
   // Per-size-class freelist resizing info.
   class PerClassResizeInfo {
